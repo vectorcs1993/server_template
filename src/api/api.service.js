@@ -12,54 +12,6 @@ export class ApiService {
     getDatabase() {
         return this.#db;
     }
-    // извлекает все записи
-    getAllRecords(reqQuery) {
-        // console.log(reqQuery);
-
-        return new Promise((resolve, reject) => {
-
-            const w = [];
-            let o = undefined;
-            if (reqQuery.user) {
-                if (Number(reqQuery.user) !== -1) w.push(`user = ${Number(reqQuery.user)}`);
-            }
-
-            if (reqQuery.branch) {
-                if (Number(reqQuery.branch) !== -1) w.push(`branch = ${Number(reqQuery.branch)}`);
-            }
-
-            if (reqQuery.type_work) {
-                if (Number(reqQuery.type_work) !== -1) w.push(`type_work = ${Number(reqQuery.type_work)}`);
-            }
-
-            if (reqQuery.type_activity) {
-                if (Number(reqQuery.type_activity) !== -1) w.push(`type_activity = ${Number(reqQuery.type_activity)}`);
-            }
-
-            if (reqQuery.dS && reqQuery.dS !== 'null' && reqQuery.dF && reqQuery.dF !== 'null') {
-                const startDate = `${reqQuery.dS} 00:00:00`;  // 2025-11-03 00:00:00
-                const finishDate = `${reqQuery.dF} 23:59:59`; // 2025-11-10 23:59:59 (ВКЛЮЧИТЕЛЬНО!)
-                w.push(`createdAt BETWEEN '${startDate}' AND '${finishDate}'`);
-            }
-            if (reqQuery.order === 'ASC' || reqQuery.order === 'DESC') {
-                o = `ORDER BY createdAt ${reqQuery.order}`;
-            }
-
-            const query = `
-                SELECT *
-                FROM records
-                ${w.length > 0 ? `WHERE ${w.join(' AND ')}` : ''}
-                ${o || ''} 
-                `;
-
-            this.getDatabase().query(query).then((res) => {
-                resolve(res);
-            }).catch((err) => {
-                console.log(err);
-                reject(err);
-            });
-        });
-    }
     getAllUsers(reqQuery) {
         // console.log(reqQuery);
         return new Promise((resolve, reject) => {
@@ -149,5 +101,4 @@ export class ApiService {
             });
         });
     }
-
 }

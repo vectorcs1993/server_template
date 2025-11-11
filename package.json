@@ -1,6 +1,6 @@
 {
-  "name": "time_tracking_server",
-  "version": "1.0.0",
+  "name": "template_server",
+  "version": "0.0.1",
   "main": "server.js",
   "type": "module",
   "scripts": {
